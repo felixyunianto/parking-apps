@@ -5,12 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title', "Parking Apps")</title>
+    <title>@yield('title', 'Parking Apps')</title>
 
     {{-- Box Icons --}}
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    {{-- Style --}}
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 
 </head>
@@ -18,18 +25,45 @@
 <body>
     @include('layouts.sidebar')
     <main>
-        <h1>My Dashboard</h1>
-        <p class="text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum neque, suscipit obcaecati animi deserunt
-            alias sed eveniet molestiae, officiis officia voluptas quam quis tempore aliquid ipsam expedita quae
-            recusandae delectus possimus laudantium cupiditate aut quo a omnis. Placeat repellat, vitae porro, dicta
-            esse tempora atque cupiditate unde, a ipsum excepturi!
-        </p>
+        <div class="content">
+            @if (session('success'))
+                <div class="alert-box show" data-alert="show">
+                    <div class="">
+                        <i class='bx bx-check-circle'></i>
+                    </div>
+                    <div class="">
+                        {{ session('success') }}
+                    </div>
+                </div>
+            @endif
+            @yield('content')
+
+            <div class="container-alert hide">
+                <div class="alert-box-confirmation">
+                    <i class='bx bxs-error-circle'></i>
+                    <h3 id="title-alert">Peringatan</h3>
+                    <p id='description-alert'>Data yang akan terhapus secara permanen</p>
+                    <div class="alert-button">
+                        <button class="btn btn-main" style="padding : 0.7rem 2rem; font-size : 1rem"
+                            onclick="return okAlertConfirmation()">Ya</button>
+                        <button class="btn btn-trash" style="padding : 0.7rem 2rem; font-size : 1rem"
+                            onclick="return closeAlertConfirmation()">Tidak</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <p class="copyright">
             &copy; 2022 <span>Parking Apps</span> All Rigths Reserved.
         </p>
     </main>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
     <script src="{{ asset('assets/app.js') }}"></script>
+
+    @yield('script')
+
 </body>
 
 </html>
