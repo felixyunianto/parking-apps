@@ -35,8 +35,8 @@ return [
     
     'pdf' => [
         'enabled' => true,
-        // 'binary'  => env('WKHTML_PDF_BINARY', '/usr/local/bin/wkhtmltopdf'),
-        'binary' => base_path('print/wkhtmltopdf'),
+        'binary'  => env('WKHTML_PDF_BINARY', '/usr/local/bin/wkhtmltopdf'),
+        // 'binary' => base_path('print/wkhtmltopdf'),
         'timeout' => false,
         'options' => [],
         'env'     => [],
