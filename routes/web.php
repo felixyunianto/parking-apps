@@ -48,3 +48,11 @@ Route::get('/rate/edit/{id}', [RateController::class, "edit"])->name('rate.edit'
 Route::put('/rate/update/{id}', [RateController::class, "update"])->name('rate.update');
 Route::delete('/rate/delete/{id}', [RateController::class, "destroy"])->name('rate.destroy');
 Route::put("/rate/status/{id}", [RateController::class, 'changeStatus'])->name('rate.status');
+
+Route::get("/test-pdf", function(){
+    // dd(env('WKHTML_PDF_BINARY'));
+    $pdf = \PDF::loadHTML('<h1>Test</h1>');
+    // dd($pdf);
+    
+    return $pdf->download('invoice.pdf');
+});
