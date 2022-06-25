@@ -14,7 +14,9 @@
                     </div>
                     <div class="card-box-body">
                         <div class="">
-                            <h3 style="font-weight: 500; font-size:2rem">77</h3>
+                            <h3 style="font-weight: 500; font-size:2rem">
+                                {{ $space }}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -26,7 +28,9 @@
                     </div>
                     <div class="card-box-body">
                         <div class="">
-                            <h3 style="font-weight: 500; font-size:2rem">4</h3>
+                            <h3 style="font-weight: 500; font-size:2rem">
+                                {{ $ongoing }}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -38,7 +42,9 @@
                     </div>
                     <div class="card-box-body">
                         <div class="">
-                            <h3 style="font-weight: 500; font-size:2rem">51</h3>
+                            <h3 style="font-weight: 500; font-size:2rem">
+                                {{ $empty }}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -49,14 +55,17 @@
                         Parkir Keluar
                     </div>
                     <div class="card-box-body">
-                        <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
-                            <div class="input-group" style="flex:1">
-                                <div class="input-field">
-                                    <input type="text" placeholder="Kode parkir">
+                        <form action="{{route('parking.checkout')}}" method="GET">
+                            @csrf
+                            <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
+                                <div class="input-group" style="flex:1">
+                                    <div class="input-field">
+                                        <input type="text" placeholder="Kode parkir" name="barcode" required>
+                                    </div>
                                 </div>
+                                <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
                             </div>
-                            <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
-                        </div>
+                        </form>
 
                     </div>
                 </div>
@@ -91,8 +100,8 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $parking->barcode }}</td>
                                 <td>{{ $parking->motorcycle_plate }}</td>
-                                <td>{{ date('d m Y h:i:s', strtotime($parking->clockin)) }}</td>
-                                <td>{{ $parking->clockout ? date('d m Y h:i:s', strtotime($parking->clockout)) : '-' }}
+                                <td>{{ date('d M Y h:i:s', strtotime($parking->clockin)) }}</td>
+                                <td>{{ $parking->clockout ? date('d M Y h:i:s', strtotime($parking->clockout)) : '-' }}
                                 </td>
                                 <td>{{ $parking->amount ? 'Rp.' . number_format($parking->amount, 0, '', '.') : '-' }}
                                 </td>
@@ -109,13 +118,13 @@
 
                                     {{-- <button class="btn btn-edit" onclick="return window.location.href='{{ route('parking.edit', $parking->id) }}'">Edit</button> --}}
                                     <i
-                                        class='bx bx-barcode icon-btn icon-btn-main'onclick="window.location.href='{{ route('parking.show', $parking->id)}}'"></i>
+                                        class='bx bx-barcode icon-btn icon-btn-main'onclick="window.location.href='{{ route('parking.show', $parking->id) }}'"></i>
 
                                     <i
                                         class='bx bx-log-out-circle icon-btn icon-btn-primary'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
                                     <i
                                         class='bx bx-edit-alt icon-btn icon-btn-edit'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
-                                        
+
                                     <i
                                         class='bx bx-trash icon-btn icon-btn-trash'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
 

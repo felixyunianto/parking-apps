@@ -46,9 +46,9 @@ function moveActiveTab() {
 }
 
 function changeLink() {
-    localStorage.removeItem('hasCodeRunBefore')
+    localStorage.removeItem("hasCodeRunBefore");
     sidebarLinks.forEach((sideLink) => sideLink.classList.remove("active"));
-    
+
     this.classList.add("active");
 
     activeIndex = this.dataset.active;
@@ -184,5 +184,6 @@ function formatRupiah(angka, prefix) {
     }
 
     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-    return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+    return prefix == undefined ? rupiah :
+    parseInt(angka) < 0 ? "Rp. -" + rupiah: rupiah ? "Rp. " + rupiah : "";
 }

@@ -63,19 +63,19 @@
                             <td class="detail-left">Total</td>
                             <td class="detail-right">
                                 {{ $parking->clockout
-                                    ? round(abs(strtotime($parking->clockout) - strtotime($parking->clockin)) / 60, 2) . ' Menit'
+                                    ? "Rp. ".number_format($parking->amount,0,"",".")
                                     : '-' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="detail-left">Bayar</td>
                             <td class="detail-right">
-                                {{ $parking->clockout ? $payment : '-' }}
+                                {{ $parking->clockout ? "Rp. ".number_format($parking->payment,0,"",".") : '-' }}
                             </td>
                         </tr>
                         <tr>
                             <td class="detail-left">Kembalian</td>
-                            <td class="detail-right">{{ $parking->clockout ? $change : '-' }}</td>
+                            <td class="detail-right">{{ $parking->clockout ? "Rp. ".number_format($parking->change,0,"",".") : '-' }}</td>
                         </tr>
                     </tbody>
                 </table>

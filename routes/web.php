@@ -40,9 +40,11 @@ Route::put("/user/status/{id}", [App\Http\Controllers\UserController::class, 'ch
 //Parking
 Route::get('/parking', [ParkingController::class, "index"])->name('parking');
 Route::get('/parking/tambah', [ParkingController::class, "create"])->name('parking.create');
+Route::get('/parking/checkout', [ParkingController::class, "checkoutParkingView"])->name('parking.checkout');
 Route::get('/parking/{id}', [ParkingController::class, "show"])->name('parking.show');
 Route::post('/parking/store', [ParkingController::class, "store"])->name('parking.store');
 Route::get('/parking/barcode/{id}', [ParkingController::class, "printReceipt"])->name('parking.print');
+Route::post('/parking/checkout/{id}', [ParkingController::class, "checkOut"])->name('parking.checkout.proses');
 
 //Rate
 Route::get('/rate', [RateController::class, "index"])->name('rate');

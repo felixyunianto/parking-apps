@@ -15,11 +15,23 @@ class ParkingController extends Controller
     public function index(){
         $parkings = Parking::orderBy('barcode')->get();
 
-        return view('pages.parking.index', compact('parkings'));
+        $space = 40;
+        
+        $ongoing = Parking::where('clockout', null)->count();
+
+        $empty = 40 - $ongoing;
+
+        return view('pages.parking.index', compact('parkings', 'space', 'ongoing', 'empty'));
     }
 
     public function create(){
-        return view('pages.parking.create');
+        $space = 40;
+        
+        $ongoing = Parking::where('clockout', null)->count();
+
+        $empty = 40 - $ongoing;
+
+        return view('pages.parking.create',compact('space', 'ongoing', 'empty'));
     }
 
     public function store(Request $request){
@@ -89,5 +101,73 @@ class ParkingController extends Controller
         // dd($pdf);
         
         return view('barcode.index', compact('parking'));
+    }
+
+    public function checkoutParkingView(Request $request) {
+        $barcode = $request->barcode;
+        $parking = \App\Models\Parking::where('barcode', $barcode)->first();
+        if($parking->clockout == null) {
+            $current = date('Y-m-d H:i:s');
+        
+
+            $duration_minute = round(abs(strtotime($current) - strtotime($parking->clockin)) / 60);
+    
+            $t1 = \Carbon\Carbon::parse($parking->clockin);
+            $t2 = \Carbon\Carbon::parse($current);
+            $duration = $t1->diff($t2);
+    
+            // dd($duration);
+    
+            $price = 0;
+    
+            if($duration_minute <= 720){
+                $price = 3000;
+            }else{
+                if($duration_minute <= 1440 && $duration_minute >= 720){
+                    $price = 5000;
+                }else{
+                    $clockin = strtotime($parking->clockin);
+                    $diff = strtotime($current) - $clockin;
+                    $price = ceil($diff / (60 * 60 * 24)) * (int) "5000";
+                }
+            }
+    
+            return view('pages.parking.checkout', compact('parking', 'price', 'current', 'duration'));
+        }else{
+            return redirect()->route('parking.show', $parking->id);
+        }
+
+        
+    }
+
+    public function checkOut(Request $request, $id) {
+        $rules = [
+            'payment' => 'required',
+            'change' => 'required',
+        ];
+
+        $messages = [
+            'required' => 'Form ini harus diisi'
+        ];
+
+        $this->validate($request, $rules, $messages);
+
+        $removePaymentDots  = str_replace(".", "", $request->payment);
+        $payment = str_replace("Rp ", "", $removePaymentDots);
+
+        $removeChangeDots  = str_replace(".", "", $request->change);
+        $change = str_replace("Rp ", "", $removeChangeDots);
+
+        $parking = Parking::findOrFail($id);
+
+        $parking -> update([
+            'clockout' => $request->clockout,
+            'duration' => $request->duration,
+            'amount' => $request->amount,
+            'payment' => $payment,
+            'change' => $change,
+        ]);
+
+        return redirect()->route('parking.show',$id)->with("success", "Data berhasil terupdate");
     }
 }

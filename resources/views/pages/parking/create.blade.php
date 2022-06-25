@@ -14,7 +14,9 @@
                     </div>
                     <div class="card-box-body">
                         <div class="">
-                            <h3 style="font-weight: 500; font-size:2rem">77</h3>
+                            <h3 style="font-weight: 500; font-size:2rem">
+                                {{ $space }}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -26,7 +28,9 @@
                     </div>
                     <div class="card-box-body">
                         <div class="">
-                            <h3 style="font-weight: 500; font-size:2rem">4</h3>
+                            <h3 style="font-weight: 500; font-size:2rem">
+                                {{ $ongoing }}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -38,7 +42,9 @@
                     </div>
                     <div class="card-box-body">
                         <div class="">
-                            <h3 style="font-weight: 500; font-size:2rem">51</h3>
+                            <h3 style="font-weight: 500; font-size:2rem">
+                                {{ $empty }}
+                            </h3>
                         </div>
                     </div>
                 </div>

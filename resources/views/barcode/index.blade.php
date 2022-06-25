@@ -4,7 +4,7 @@
 
 <body style="padding: 0; margin:0;">
     <style>
-        .barcode{
+        .barcode {
             width: 100%;
             max-width: 100%;
             display: flex;
@@ -14,14 +14,14 @@
             margin-left: auto;
             margin-right: auto;
             text-align: center;
-            padding : 0 auto;
+            padding: 0 auto;
         }
 
         span {
             padding-top: 8px;
             font-weight: bold;
             letter-spacing: 2px;
-            font-size: 1rem;
+            font-size: 0.8rem;
         }
 
         .tc {
@@ -31,7 +31,7 @@
         .rTable {
             width: 100%;
             margin-top: 10px;
-            font-size: 10px;
+            font-size: 8px;
         }
 
         .fs-16 {
@@ -54,13 +54,12 @@
             font-size: 8px;
             font-weight: bold;
         }
-
     </style>
     <div style="margin:0 auto;display:flex;align-items:center;flex-direction:column; width: 90%;">
         <h1 class="tc fs-16">IndePark</h1>
         <div class="barcode">
-            <img src="data:images/png;base64,{{ DNS1D::getBarcodePNG($parking->barcode, 'C128') }}" alt="Barcode" height="50px"
-                width="100%" style="margin:0 auto;" />
+            <img src="data:images/png;base64,{{ DNS1D::getBarcodePNG($parking->barcode, 'C128') }}" alt="Barcode"
+                height="40px" width="100%" style="margin:0 auto;" />
             <span>{{ $parking->barcode }}</span>
         </div>
         <table class="rTable" style="">
@@ -69,6 +68,7 @@
                     <td class="w40">
                         Plat Motor
                     </td>
+                    <td class="w10">:</td>
                     <td class="w50">
                         {{ $parking->motorcycle_plate }}
                     </td>
@@ -77,26 +77,31 @@
                     <td class="w40">
                         Nama
                     </td>
+                    <td class="w10">:</td>
                     <td class="w50">{{ $parking->driver_name }}</td>
                 </tr>
                 <tr>
                     <td class="w40">
                         No Handphone
                     </td>
+                    <td class="w10">:</td>
                     <td class="w50">{{ $parking->phone_number }}</td>
                 </tr>
                 <tr>
                     <td class="w40">Tanggal Masuk</td>
+                    <td class="w10">:</td>
                     <td class="w50">{{ date('Y-m-d H:i:s', strtotime($parking->clockin)) }}</td>
                 </tr>
                 <tr>
                     <td class="w40">Tanggal Keluar</td>
+                    <td class="w10">:</td>
                     <td class="w50">
                         {{ $parking->clockout ? date('Y-m-d H:i:s', strtotime($parking->clockout)) : '-' }}
                     </td>
                 </tr>
                 <tr>
                     <td class="w40">Durasi</td>
+                    <td class="w10">:</td>
                     <td class="w50">
                         {{ $parking->clockout
                             ? round(abs(strtotime($parking->clockout) - strtotime($parking->clockin)) / 60, 2) . ' Menit'
@@ -105,20 +110,23 @@
                 </tr>
                 <tr>
                     <td class="w40">Total</td>
+                    <td class="w10">:</td>
                     <td class="w50">
-                        {{ $parking->clockout
-                            ? round(abs(strtotime($parking->clockout) - strtotime($parking->clockin)) / 60, 2) . ' Menit'
-                            : '-' }}
+                        {{ $parking->clockout ? 'Rp. ' . number_format($parking->amount, 0, '', '.') : '-' }}
                     </td>
                 </tr>
                 <tr>
                     <td class="w40">Bayar</td>
+                    <td class="w10">:</td>
                     <td class="w50">
-                        {{ $parking->clockout ? $payment : '-' }}</td>
+                        {{ $parking->clockout ? 'Rp. ' . number_format($parking->payment, 0, '', '.') : '-' }}
+                    </td>
                 </tr>
                 <tr>
                     <td class="w40">Kembalian</td>
-                    <td class="w50">{{ $parking->clockout ? $change : '-' }}</td>
+                    <td class="w10">:</td>
+                    <td class="w50">
+                        {{ $parking->clockout ? 'Rp. ' . number_format($parking->change, 0, '', '.') : '-' }}</td>
                 </tr>
             </tbody>
         </table>
