@@ -46,7 +46,9 @@ function moveActiveTab() {
 }
 
 function changeLink() {
+    localStorage.removeItem('hasCodeRunBefore')
     sidebarLinks.forEach((sideLink) => sideLink.classList.remove("active"));
+    
     this.classList.add("active");
 
     activeIndex = this.dataset.active;

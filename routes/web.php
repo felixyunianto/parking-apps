@@ -39,6 +39,10 @@ Route::put("/user/status/{id}", [App\Http\Controllers\UserController::class, 'ch
 
 //Parking
 Route::get('/parking', [ParkingController::class, "index"])->name('parking');
+Route::get('/parking/tambah', [ParkingController::class, "create"])->name('parking.create');
+Route::get('/parking/{id}', [ParkingController::class, "show"])->name('parking.show');
+Route::post('/parking/store', [ParkingController::class, "store"])->name('parking.store');
+Route::get('/parking/barcode/{id}', [ParkingController::class, "printReceipt"])->name('parking.print');
 
 //Rate
 Route::get('/rate', [RateController::class, "index"])->name('rate');
@@ -51,8 +55,33 @@ Route::put("/rate/status/{id}", [RateController::class, 'changeStatus'])->name('
 
 Route::get("/test-pdf", function(){
     // dd(env('WKHTML_PDF_BINARY'));
-    $pdf = \PDF::loadHTML('<h1>Test</h1>');
+    $parking = \App\Models\Parking::findOrFail(1);
+
+    // $duration = $parking->clockout != null ? round(abs(strtotime($parking->clockout) - strtotime($parking->clockin)) / 60, 2) : 0;
+
+    // if($duration <= 720){
+    //     dd("3000");
+    // }else{
+    //     if($duration <= 1440 && $duration >= 720){
+    //         dd("5000");
+    //     }else{
+    //         $clockin = new \Carbon\Carbon($parking->clockin);
+    //     $clockout = new \Carbon\Carbon($parking->clockout);
+    //         $diff = \Carbon\Carbon::parse($clockin)->diffInDays($clockout);
+    //         dd($diff * (int) "5000");
+    //     }
+    // }
+
+    $pdf = \PDF::loadView('barcode.index', compact('parking'))
+    ->setOptions([
+        'page-width' =>  '58',
+        'page-height' => '85',
+        'margin-left' => 0,
+        'margin-right' => 0,
+        'margin-top' => 3,
+        'margin-bottom' => 0
+    ]);
     // dd($pdf);
     
-    return $pdf->download('invoice.pdf');
+    return $pdf->stream('invoice.pdf');
 });
