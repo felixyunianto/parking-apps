@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Parking;
+use App\Models\Rate;
+use App\Models\Slot;
 use PDF;
 
 class ParkingController extends Controller
@@ -15,21 +17,21 @@ class ParkingController extends Controller
     public function index(){
         $parkings = Parking::orderBy('barcode')->get();
 
-        $space = 40;
+        $space = Slot::findOrFail(1)->capasity;
         
         $ongoing = Parking::where('clockout', null)->count();
 
-        $empty = 40 - $ongoing;
+        $empty = $space - $ongoing;
 
         return view('pages.parking.index', compact('parkings', 'space', 'ongoing', 'empty'));
     }
 
     public function create(){
-        $space = 40;
+        $space = Slot::findOrFail(1)->capasity;
         
         $ongoing = Parking::where('clockout', null)->count();
 
-        $empty = 40 - $ongoing;
+        $empty = $space - $ongoing;
 
         return view('pages.parking.create',compact('space', 'ongoing', 'empty'));
     }
@@ -106,11 +108,12 @@ class ParkingController extends Controller
     public function checkoutParkingView(Request $request) {
         $barcode = $request->barcode;
         $parking = \App\Models\Parking::where('barcode', $barcode)->first();
+
         if($parking->clockout == null) {
             $current = date('Y-m-d H:i:s');
         
-
             $duration_minute = round(abs(strtotime($current) - strtotime($parking->clockin)) / 60);
+
     
             $t1 = \Carbon\Carbon::parse($parking->clockin);
             $t2 = \Carbon\Carbon::parse($current);
@@ -169,5 +172,50 @@ class ParkingController extends Controller
         ]);
 
         return redirect()->route('parking.show',$id)->with("success", "Data berhasil terupdate");
+    }
+
+    public function edit($id){
+        $parking = Parking::findOrFail($id);
+
+        $parkings = Parking::orderBy('barcode')->get();
+
+        $space = Slot::findOrFail(1)->capasity;
+        
+        $ongoing = Parking::where('clockout', null)->count();
+
+        $empty = $space - $ongoing;
+
+        return view('pages.parking.edit', compact('parking', 'space', 'ongoing', 'empty'));
+    }
+
+    public function update(Request $request, $id){
+        $rules = [
+            'motorcycle_plate' => 'required',
+            'driver_name' => 'required',
+            'phone_number' => 'required|min:10',
+        ];
+
+        $message = [
+            'required' => ':attribute ini tidak boleh kosong',
+            'min' => ':attribute minimal karakter :min'
+        ];
+
+        $this->validate($request, $rules, $message);
+
+        $parking = Parking::findOrFail($id);
+        $parking->update([
+            'motorcycle_plate' => $request->motorcycle_plate,
+            'driver_name' => $request->driver_name,
+            'phone_number' => $request->phone_number,
+        ]);
+
+        return redirect()->route('parking')->with('success', 'Data parkir berhasil diubah');
+    }
+
+    public function destroy($id){
+        $parking = Parking::findOrFail($id);
+        $parking->delete();
+
+        return redirect()->route('parking')->with('success', 'Data parkir berhasil dihapus');
     }
 }

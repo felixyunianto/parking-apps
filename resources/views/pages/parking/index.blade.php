@@ -13,10 +13,28 @@
                         Total Parkir
                     </div>
                     <div class="card-box-body">
-                        <div class="">
+                        <div class="" style="display:flex; gap: 1rem; align-items:center">
                             <h3 style="font-weight: 500; font-size:2rem">
                                 {{ $space }}
                             </h3>
+                            <form action="{{ route('slot.update', 1) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="_method" value="PUT" style="">
+                                <div class="" style="display:flex; gap: 0.7rem; align-items:center">
+                                    <div class="input-group" style="flex:1;display: none;padding: 0.5rem"
+                                        id="input-change-slot">
+                                        <div class="input-field @error('capasity') error @enderror">
+                                            <input type="number" placeholder="Total" name="capasity">
+                                            <div class="error-mark @error('capasity') error-mark-show @enderror">
+                                                <i class="bx bx-x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-main" type="submit" style="padding: 0.7rem 1rem;display: none"
+                                        id="change-slot">Ubah</button>
+                                </div>
+                                <a href="" style="color:blue" id="first-change-slot">Ubah</a>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -55,7 +73,7 @@
                         Parkir Keluar
                     </div>
                     <div class="card-box-body">
-                        <form action="{{route('parking.checkout')}}" method="GET">
+                        <form action="{{ route('parking.checkout') }}" method="GET">
                             @csrf
                             <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
                                 <div class="input-group" style="flex:1">
@@ -108,25 +126,47 @@
 
                                 <td
                                     style="display: flex; gap : 1rem; justify-content:flex-end; align-items : center; text-align: right">
-                                    {{-- <form action="{{ route('parking.destroy', $parking->id) }}" method="POST">
+
+                                    <form action="{{ route('parking.destroy', $parking->id) }}" method="POST">
                                         @csrf
 
                                         <input type="hidden" name="_method" value="DELETE">
+
                                         <button style="display: none" type="submit"
                                             id="form-delete-parking-{{ $parking->id }}"></button>
-                                    </form> --}}
+                                    </form>
 
-                                    {{-- <button class="btn btn-edit" onclick="return window.location.href='{{ route('parking.edit', $parking->id) }}'">Edit</button> --}}
-                                    <i
-                                        class='bx bx-barcode icon-btn icon-btn-main'onclick="window.location.href='{{ route('parking.show', $parking->id) }}'"></i>
 
-                                    <i
-                                        class='bx bx-log-out-circle icon-btn icon-btn-primary'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
-                                    <i
-                                        class='bx bx-edit-alt icon-btn icon-btn-edit'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
+                                    @if ($parking->clockout == null)
+                                        <form action="{{ route('parking.checkout') }}" method="GET">
+                                            @csrf
 
-                                    <i
-                                        class='bx bx-trash icon-btn icon-btn-trash'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
+                                            <input type="hidden" placeholder="Kode parkir" name="barcode"
+                                                value="{{ $parking->barcode }}">
+
+                                            <button style="display: none" type="submit"
+                                                id="form-checkout-parking-{{ $parking->id }}"></button>
+                                        </form>
+
+                                        <i
+                                            class='bx bx-barcode icon-btn icon-btn-main'onclick="window.location.href='{{ route('parking.show', $parking->id) }}'"></i>
+
+                                        <i
+                                            class='bx bx-log-out-circle icon-btn icon-btn-primary'onclick="showAlertConfirmation('form-checkout-parking-{{ $parking->id }}', 'Peringatan', 'Apakah anda yakin ingin melanjutkan proses checkout kendaraan?')"></i>
+                                    @endif
+
+                                    @role('admin')
+                                        @if ($parking->clockout == null)
+                                            <i
+                                                class='bx bx-edit-alt icon-btn icon-btn-edit'onclick="window.location.href='{{ route('parking.edit', $parking->id) }}'"></i>
+                                        @endif
+
+                                        <i
+                                            class='bx bx-trash icon-btn icon-btn-trash'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
+                                    @endrole
+
+
+
 
                                 </td>
                             </tr>
@@ -140,8 +180,39 @@
 
 @section('script')
     <script>
+        var buttonSubmitChangeSlot = document.querySelector('#change-slot');
+        var inputChangeSlot = document.querySelector('#input-change-slot');
+        var buttonChangeSlot = document.querySelector('#first-change-slot');
+
+        // if('')
+
         $(document).ready(function() {
             $('#parking-table').DataTable();
         });
+
+        $('#first-change-slot').on('click', function(e) {
+            e.preventDefault();
+
+            buttonSubmitChangeSlot.style.display = 'block';
+            inputChangeSlot.style.display = 'block';
+            this.style.display = 'none';
+        })
     </script>
+    @error('capasity')
+        <script>
+            buttonSubmitChangeSlot.style.display = 'block';
+            inputChangeSlot.style.display = 'block';
+            buttonChangeSlot.style.display = 'none';
+        </script>
+    @else
+        <script>
+            $('#first-change-slot').on('click', function(e) {
+                e.preventDefault();
+
+                buttonSubmitChangeSlot.style.display = 'block';
+                inputChangeSlot.style.display = 'block';
+                this.style.display = 'none';
+            })
+        </script>
+    @enderror
 @endsection

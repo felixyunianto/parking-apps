@@ -61,6 +61,8 @@
                                 <td class="detail-right" style="padding: 1.1rem 2rem">
                                     {{ $duration->d !== 0 ? $duration->d . ' Hari ' : '' }}
                                     {{ $duration->h !== 0 ? $duration->h . ' Jam ' : '' }}
+                                    {{ $duration->i !== 0 ? $duration->i . ' Menit ' : '' }}
+                                    {{ $duration->s !== 0 ? $duration->s . ' Detik ' : '' }}
                                     <input type="hidden" name="duration"
                                         value="{{ $duration->y . ':' . $duration->m . ':' . $duration->d . ':' . $duration->h . ':' . $duration->m . ':' . $duration->s }}">
                                 </td>

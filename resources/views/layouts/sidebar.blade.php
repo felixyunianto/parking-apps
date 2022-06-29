@@ -30,7 +30,7 @@
                     <span class="link hide">Parkir</span>
                 </a>
             </li>
-            <li class="tooltip-element" data-tooltip="2">
+            {{-- <li class="tooltip-element" data-tooltip="2">
                 <a href="#" class="@if (Request::is('rate')) active @endif" data-active="2"
                     data-link="{{ route('rate') }}">
                     <div class="icon-sidebar">
@@ -39,10 +39,10 @@
                     </div>
                     <span class="link hide">Tarif</span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li class="tooltip-element" data-tooltip="3">
-                <a href="#" data-active="3">
+            <li class="tooltip-element" data-tooltip="2">
+                <a href="#" data-active="2">
                     <div class="icon-sidebar">
                         <i class="bx bx-file"></i>
                         <i class="bx bxs-file"></i>
@@ -51,8 +51,8 @@
                 </a>
             </li>
 
-            <li class="tooltip-element" data-tooltip="4">
-                <a href="#" class="@if (Request::is('user')) active @endif" data-active="4"
+            <li class="tooltip-element" data-tooltip="3">
+                <a href="#" class="@if (Request::is('user')) active @endif" data-active="3"
                     data-link="{{ route('user') }}">
                     <div class="icon-sidebar">
                         <i class="bx bx-user"></i>
@@ -65,7 +65,7 @@
             <div class="tooltip">
                 <span class="show">Dashboard</span>
                 <span>Parkir</span>
-                <span>Tarif</span>
+                {{-- <span>Tarif</span> --}}
                 <span>Laporan</span>
                 <span>User</span>
             </div>

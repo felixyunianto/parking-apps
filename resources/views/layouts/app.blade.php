@@ -9,14 +9,13 @@
 
     {{-- Box Icons --}}
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-
-
-
+    {{-- JQUERY --}}
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
         crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-
+    {{-- DataTables --}}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">   
+    {{-- ChartJs --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
     {{-- Style --}}
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 
@@ -36,6 +35,18 @@
                     </div>
                 </div>
             @endif
+
+            @if (session('error'))
+                <div class="alert-box show" data-alert="show" style="background-color : red">
+                    <div class="">
+                        <i class='bx bx-check-circle'></i>
+                    </div>
+                    <div class="">
+                        {{ session('error') }}
+                    </div>
+                </div>
+            @endif
+
             @yield('content')
 
             <div class="container-alert hide">

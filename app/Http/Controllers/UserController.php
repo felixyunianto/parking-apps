@@ -8,7 +8,7 @@ use App\Models\User;
 class UserController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(['auth', 'role:admin'])->except("profile");
     }
 
     public function index(){
@@ -113,4 +113,9 @@ class UserController extends Controller
 
         return redirect()->route('user')->with('success', "Status user berhasil diubah");
     }
+
+    public function profile(){
+        dd("PROFLE");
+    }
 }
+

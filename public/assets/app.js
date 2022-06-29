@@ -18,7 +18,7 @@ switch (window.location.pathname.split("/")[1]) {
         break;
 
     case "user":
-        activeIndex = 4;
+        activeIndex = 3;
         break;
 
     default:
@@ -64,7 +64,7 @@ function changeLink() {
             break;
 
         case "user":
-            activeIndex = 4;
+            activeIndex = 3;
             break;
 
         default:

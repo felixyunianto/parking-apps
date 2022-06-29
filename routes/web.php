@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\RateController;
+use App\Http\Controllers\SlotController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,7 @@ Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit
 Route::put('/user/update/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
 Route::delete('/user/delete/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 Route::put("/user/status/{id}", [App\Http\Controllers\UserController::class, 'changeStatus'])->name('user.status');
+Route::get('/user/profile/{id}', [App\Http\Controllers\UserController::class, 'profile'])->name('user.profile');
 
 
 
@@ -45,6 +48,9 @@ Route::get('/parking/{id}', [ParkingController::class, "show"])->name('parking.s
 Route::post('/parking/store', [ParkingController::class, "store"])->name('parking.store');
 Route::get('/parking/barcode/{id}', [ParkingController::class, "printReceipt"])->name('parking.print');
 Route::post('/parking/checkout/{id}', [ParkingController::class, "checkOut"])->name('parking.checkout.proses');
+Route::get('/parking/edit/{id}', [ParkingController::class, "edit"])->name('parking.edit');
+Route::put('/parking/update/{id}', [ParkingController::class, "update"])->name('parking.update');
+Route::delete('/parking/destroy/{id}', [ParkingController::class, "destroy"])->name('parking.destroy');
 
 //Rate
 Route::get('/rate', [RateController::class, "index"])->name('rate');
@@ -55,35 +61,10 @@ Route::put('/rate/update/{id}', [RateController::class, "update"])->name('rate.u
 Route::delete('/rate/delete/{id}', [RateController::class, "destroy"])->name('rate.destroy');
 Route::put("/rate/status/{id}", [RateController::class, 'changeStatus'])->name('rate.status');
 
-Route::get("/test-pdf", function(){
-    // dd(env('WKHTML_PDF_BINARY'));
-    $parking = \App\Models\Parking::findOrFail(1);
+//Profile
 
-    // $duration = $parking->clockout != null ? round(abs(strtotime($parking->clockout) - strtotime($parking->clockin)) / 60, 2) : 0;
 
-    // if($duration <= 720){
-    //     dd("3000");
-    // }else{
-    //     if($duration <= 1440 && $duration >= 720){
-    //         dd("5000");
-    //     }else{
-    //         $clockin = new \Carbon\Carbon($parking->clockin);
-    //     $clockout = new \Carbon\Carbon($parking->clockout);
-    //         $diff = \Carbon\Carbon::parse($clockin)->diffInDays($clockout);
-    //         dd($diff * (int) "5000");
-    //     }
-    // }
+//Slot
+Route::put("/slot/update/{id}", [SlotController::class, 'update'])->name('slot.update');
 
-    $pdf = \PDF::loadView('barcode.index', compact('parking'))
-    ->setOptions([
-        'page-width' =>  '58',
-        'page-height' => '85',
-        'margin-left' => 0,
-        'margin-right' => 0,
-        'margin-top' => 3,
-        'margin-bottom' => 0
-    ]);
-    // dd($pdf);
-    
-    return $pdf->stream('invoice.pdf');
-});
+Route::get("/chart", [HomeController::class, 'getChartData']);
