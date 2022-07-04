@@ -33,7 +33,9 @@
                                     <button class="btn btn-main" type="submit" style="padding: 0.7rem 1rem;display: none"
                                         id="change-slot">Ubah</button>
                                 </div>
-                                <a href="" style="color:blue" id="first-change-slot">Ubah</a>
+                                @role("admin")
+                                    <a href="" style="color:blue" id="first-change-slot">Ubah</a>
+                                @endrole
                             </form>
                         </div>
                     </div>
@@ -149,19 +151,23 @@
                                         </form>
 
                                         <i
+                                        style="font-size: 1.7rem"
                                             class='bx bx-barcode icon-btn icon-btn-main'onclick="window.location.href='{{ route('parking.show', $parking->id) }}'"></i>
 
                                         <i
+                                        style="font-size: 1.7rem"
                                             class='bx bx-log-out-circle icon-btn icon-btn-primary'onclick="showAlertConfirmation('form-checkout-parking-{{ $parking->id }}', 'Peringatan', 'Apakah anda yakin ingin melanjutkan proses checkout kendaraan?')"></i>
                                     @endif
 
                                     @role('admin')
                                         @if ($parking->clockout == null)
                                             <i
+                                            style="font-size: 1.7rem"
                                                 class='bx bx-edit-alt icon-btn icon-btn-edit'onclick="window.location.href='{{ route('parking.edit', $parking->id) }}'"></i>
                                         @endif
 
                                         <i
+                                        style="font-size: 1.7rem"
                                             class='bx bx-trash icon-btn icon-btn-trash'onclick="showAlertConfirmation('form-delete-parking-{{ $parking->id }}', 'Peringatan', 'Data akan dihapus secara permanen')"></i>
                                     @endrole
 

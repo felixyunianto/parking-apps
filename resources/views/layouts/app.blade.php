@@ -39,7 +39,7 @@
             @if (session('error'))
                 <div class="alert-box show" data-alert="show" style="background-color : red">
                     <div class="">
-                        <i class='bx bx-check-circle'></i>
+                        <i class='bx bx-x-circle'></i>
                     </div>
                     <div class="">
                         {{ session('error') }}

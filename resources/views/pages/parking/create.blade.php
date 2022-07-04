@@ -13,10 +13,30 @@
                         Total Parkir
                     </div>
                     <div class="card-box-body">
-                        <div class="">
+                        <div class="" style="display:flex; gap: 1rem; align-items:center">
                             <h3 style="font-weight: 500; font-size:2rem">
                                 {{ $space }}
                             </h3>
+                            <form action="{{ route('slot.update', 1) }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="_method" value="PUT" style="">
+                                <div class="" style="display:flex; gap: 0.7rem; align-items:center">
+                                    <div class="input-group" style="flex:1;display: none;padding: 0.5rem"
+                                        id="input-change-slot">
+                                        <div class="input-field @error('capasity') error @enderror">
+                                            <input type="number" placeholder="Total" name="capasity">
+                                            <div class="error-mark @error('capasity') error-mark-show @enderror">
+                                                <i class="bx bx-x"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-main" type="submit" style="padding: 0.7rem 1rem;display: none"
+                                        id="change-slot">Ubah</button>
+                                </div>
+                                @role("admin")
+                                    <a href="" style="color:blue" id="first-change-slot">Ubah</a>
+                                @endrole
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -55,14 +75,17 @@
                         Parkir Keluar
                     </div>
                     <div class="card-box-body">
-                        <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
-                            <div class="input-group" style="flex:1">
-                                <div class="input-field">
-                                    <input type="text" placeholder="Kode parkir">
+                        <form action="{{ route('parking.checkout') }}" method="GET">
+                            @csrf
+                            <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
+                                <div class="input-group" style="flex:1">
+                                    <div class="input-field">
+                                        <input type="text" placeholder="Kode parkir" name="barcode" required>
+                                    </div>
                                 </div>
+                                <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
                             </div>
-                            <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
-                        </div>
+                        </form>
 
                     </div>
                 </div>
@@ -96,7 +119,7 @@
                         <div class="input-group" style="width: 40%">
                             <label for="">Nama Pengemudi <span>*</span></label>
                             <div class="input-field @error('driver_name') error @enderror">
-                                <input type="text" placeholder="Nama Tarif" name="driver_name" value="{{ old('driver_name') }}">
+                                <input type="text" placeholder="Nama Pengemudi" name="driver_name" value="{{ old('driver_name') }}">
                                 <div class="error-mark @error('driver_name') error-mark-show @enderror">
                                     <i class="bx bx-x"></i>
                                 </div>

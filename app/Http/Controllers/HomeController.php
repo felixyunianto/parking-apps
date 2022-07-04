@@ -28,20 +28,33 @@ class HomeController extends Controller
     }
 
     public function getChartData(Request $request) {
-        // $data = Parking::
-        $now = \Carbon\Carbon::now();
-        $weekStartDate = $now->startOfWeek()->format('Y-m-d H:i:s');
-        $weekEndDate = $now->endOfWeek()->format('Y-m-d H:i:s');
+        $months = (array) [
+            "January" => 0,
+            "February" => 0,
+            "March" => 0,
+            "April" => 0,
+            "May" => 0,
+            "June" => 0,
+            "July" => 0,
+            "August" => 0,
+            "September" => 0,
+            "October" => 0,
+            "November" => 0,
+            "December" => 0,
 
-        $weeklyVisitors = \DB::table('parkings')
-        ->select([
-            \DB::raw('DATE_FORMAT(clockin,"%Y-%m-%d") as date'),
-            \DB::raw('count(DATE_FORMAT(clockin,"%Y-%m-%d")) as total'),
-        ])
-        ->whereBetween('clockin', [$weekStartDate, $weekEndDate])
-        ->groupBy('date')
-        ->get();
+        ];
+        $monthData = Parking::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month_name"))
+                    ->whereYear('created_at', date('Y'))
+                    ->groupBy(\DB::raw("Month(created_at)"))
+                    ->pluck('count', 'month_name');
+
+        foreach($monthData as $index => $m){
+            $months[$index] = $m;
+        }
         
-        return response()->json($weeklyVisitors);
+        return response()->json([
+            // 'label' => $labels,
+            'data' => (array) $months
+        ]);
     }
 }

@@ -109,36 +109,43 @@ class ParkingController extends Controller
         $barcode = $request->barcode;
         $parking = \App\Models\Parking::where('barcode', $barcode)->first();
 
-        if($parking->clockout == null) {
-            $current = date('Y-m-d H:i:s');
+        if($parking){
+            dd("ADA");
+        }else{
+            return redirect()->back()->with("error", "Data tidak ditemukan");
+        }
+
+
+        // if($parking->clockout == null) {
+        //     $current = date('Y-m-d H:i:s');
         
-            $duration_minute = round(abs(strtotime($current) - strtotime($parking->clockin)) / 60);
+        //     $duration_minute = round(abs(strtotime($current) - strtotime($parking->clockin)) / 60);
 
     
-            $t1 = \Carbon\Carbon::parse($parking->clockin);
-            $t2 = \Carbon\Carbon::parse($current);
-            $duration = $t1->diff($t2);
+        //     $t1 = \Carbon\Carbon::parse($parking->clockin);
+        //     $t2 = \Carbon\Carbon::parse($current);
+        //     $duration = $t1->diff($t2);
     
-            // dd($duration);
+        //     // dd($duration);
     
-            $price = 0;
+        //     $price = 0;
     
-            if($duration_minute <= 720){
-                $price = 3000;
-            }else{
-                if($duration_minute <= 1440 && $duration_minute >= 720){
-                    $price = 5000;
-                }else{
-                    $clockin = strtotime($parking->clockin);
-                    $diff = strtotime($current) - $clockin;
-                    $price = ceil($diff / (60 * 60 * 24)) * (int) "5000";
-                }
-            }
+        //     if($duration_minute <= 720){
+        //         $price = 3000;
+        //     }else{
+        //         if($duration_minute <= 1440 && $duration_minute >= 720){
+        //             $price = 5000;
+        //         }else{
+        //             $clockin = strtotime($parking->clockin);
+        //             $diff = strtotime($current) - $clockin;
+        //             $price = ceil($diff / (60 * 60 * 24)) * (int) "5000";
+        //         }
+        //     }
     
-            return view('pages.parking.checkout', compact('parking', 'price', 'current', 'duration'));
-        }else{
-            return redirect()->route('parking.show', $parking->id);
-        }
+        //     return view('pages.parking.checkout', compact('parking', 'price', 'current', 'duration'));
+        // }else{
+        //     return redirect()->route('parking.show', $parking->id);
+        // }
 
         
     }

@@ -822,3 +822,25 @@ input[type="number"] {
 .icon-btn-trash:hover {
     color: rgb(241, 54, 54);
 }
+
+/* Dashboard */
+.container-home {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.card-home {
+    background-color: #fff;
+    border-radius: 2px;
+    border : 1px solid #bab6b6
+}
+
+.w-60{
+    width: 60%;
+}
+
+.w-40{
+    width: 40%;
+}
+

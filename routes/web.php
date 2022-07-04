@@ -67,4 +67,4 @@ Route::put("/rate/status/{id}", [RateController::class, 'changeStatus'])->name('
 //Slot
 Route::put("/slot/update/{id}", [SlotController::class, 'update'])->name('slot.update');
 
-Route::get("/chart", [HomeController::class, 'getChartData']);
+Route::get("/chart", [HomeController::class, 'getChartData'])->name('chart.month');
