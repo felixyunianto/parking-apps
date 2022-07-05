@@ -75,7 +75,11 @@
                         Parkir Keluar
                     </div>
                     <div class="card-box-body">
-                        <form action="{{ route('parking.checkout') }}" method="GET">
+                        <div class="" style="width : 100%; display: flex; align-items :center; gap: 0.5rem" id="container-choose-action">
+                            <div class="btn btn-main" style="width: 50%; padding: 0.8rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-scanner">Dengan scanner</div>
+                            <div class="btn btn-main" style="width: 50%; padding: 0.8rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-camera">Dengan kamera</div>
+                        </div>
+                        <form action="{{ route('parking.checkout') }}" method="GET" style="display: none" id="form-scanner">
                             @csrf
                             <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
                                 <div class="input-group" style="flex:1">
@@ -86,7 +90,6 @@
                                 <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -182,6 +185,17 @@
             </div>
         </div>
     </div>
+    <div class="container-camera">
+        <div class="popup-camera">
+            <div class="popup-camera-close">
+                <i class="bx bx-x"></i>
+            </div>
+            <div class="video-preview">
+                    
+            </div>
+        </div>
+    </div>
+    
 @endsection
 
 @section('script')
@@ -203,6 +217,80 @@
             inputChangeSlot.style.display = 'block';
             this.style.display = 'none';
         })
+
+        let containerChooseAction = $('#container-choose-action')
+        let btnChooseScanner =  $('#btn-choose-scanner')
+        let btnChooseCamera = $('#btn-choose-camera')
+        
+        let formScanner = $('#form-scanner')
+        
+
+        btnChooseScanner.click(function () {
+            containerChooseAction.hide()
+            formScanner.show();
+        })
+
+
+        const codeReader = new ZXing.BrowserMultiFormatReader();
+
+
+        function initScanner() {
+            codeReader
+            .listVideoInputDevices()
+            .then(videoInputDevices => {
+                videoInputDevices.forEach(device =>
+                    console.log(`${device.label}, ${device.deviceId}`)
+                );
+ 
+                if(videoInputDevices.length > 0){
+                     
+                    if(selectedDeviceId == null){
+                        if(videoInputDevices.length > 1){
+                            selectedDeviceId = videoInputDevices[1].deviceId
+                        } else {
+                            selectedDeviceId = videoInputDevices[0].deviceId
+                        }
+                    }
+                     
+                     
+                    if (videoInputDevices.length >= 1) {
+                        sourceSelect.html('');
+                        videoInputDevices.forEach((element) => {
+                            const sourceOption = document.createElement('option')
+                            sourceOption.text = element.label
+                            sourceOption.value = element.deviceId
+                            if(element.deviceId == selectedDeviceId){
+                                sourceOption.selected = 'selected';
+                            }
+                            sourceSelect.append(sourceOption)
+                        })
+                 
+                    }
+ 
+                    codeReader
+                        .decodeOnceFromVideoDevice(selectedDeviceId, 'previewKamera')
+                        .then(result => {
+ 
+                                //hasil scan
+                                console.log(result.text)
+                                $("#hasilscan").val(result.text);
+                             
+                                if(codeReader){
+                                    codeReader.reset()
+                                }
+                        })
+                        .catch(err => console.error(err));
+                     
+                } else {
+                    alert("Camera not found!")
+                }
+            })
+            .catch(err => console.error(err.message));
+        }
+
+        initScanner();
+
+
     </script>
     @error('capasity')
         <script>

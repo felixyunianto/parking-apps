@@ -18,6 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
     {{-- Style --}}
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
+    {{-- Scan Barcode --}}
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
 
 </head>
 
@@ -25,6 +27,7 @@
     @include('layouts.sidebar')
     <main>
         <div class="content">
+            
             @if (session('success'))
                 <div class="alert-box show" data-alert="show">
                     <div class="">

@@ -1,10 +1,14 @@
 <nav>
+    
     <div class="sidebar-top">
         <span class="shrink-btn">
             <i class="bx bx-chevron-left"></i>
         </span>
         <img src="{{ asset('img\logo.png') }}" alt="" class="logo">
         <h3 class="hide">Parking Apps</h3>
+        <div class="icon-menu-sidebar">
+            <i class="bx bx-menu"></i>
+        </div>
     </div>
 
     <div class="sidebar-links">
@@ -81,8 +85,6 @@
                 <img src="{{ asset('img\profile.svg') }}" alt="">
                 <div class="admin-info">
                     <h3>{{ Auth::user()->name }}</h3>
-                    {{-- <div class="truncated-box">
-                    </div> --}}
                     <h5>{{ Auth::user()->is_admin == 1 ? 'Admin' : 'Operator' }}</h5>
                 </div>
             </div>

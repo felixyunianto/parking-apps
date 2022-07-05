@@ -56,6 +56,10 @@ nav::before {
     left: 100%;
 }
 
+.icon-menu-sidebar{
+    display: none;
+}
+
 .sidebar-top {
     position: relative;
     display: flex;
@@ -329,6 +333,8 @@ body.shrink .admin-profile {
 body.shrink .tooltip {
     display: grid;
 }
+
+/* ============= End Sidebar ============= */
 
 main {
     flex: 1;
@@ -844,3 +850,156 @@ input[type="number"] {
     width: 40%;
 }
 
+.w-50{
+    width: 50%;
+}
+
+.container-camera {
+    position: absolute;
+    top :0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background : rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.popup-camera {
+    width: 50%;
+    height: 50%;
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media screen and (max-width : 768px){
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    body.shrink nav{
+        width: 100%;
+    }
+
+    nav{
+        height : 80px;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        padding : 1.8rem 0;
+        z-index: 20;
+    }
+
+    nav::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        top: 0;
+        left: -100%;
+    }
+
+    .sidebar-top{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .sidebar-links{
+        background-color: var(--main-color) ;
+    }
+
+    .sidebar-footer{
+        background-color: var(--main-color) ;
+    }
+
+    .icon-menu-sidebar{
+        float : right;
+        margin-right: 1.65rem;
+        display: block;
+    }
+
+    body.shrink .hide{
+        opacity: 1;
+    }
+
+    body.shrink .hide{
+        opacity: 1;
+    }
+
+    nav .sidebar-links {
+        margin-top:-100%;
+        transition: all 0.3;
+    }
+
+    nav .sidebar-footer {
+        margin-top:-100%;
+        transition: all 0.3;
+    }
+
+    body.shrink nav .sidebar-links {
+        margin-top: 0;
+        transition: all 0.3;
+    }
+
+    body.shrink nav .sidebar-footer {
+        margin-top: 0;
+        transition: all 0.3;
+        padding : 1rem 0;
+    }
+
+    .row-parking {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows : repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .card-box-body {
+        overflow: scroll;
+    }
+
+    .shrink-btn {
+        display: none;
+    }
+
+    body.shrink .account {
+        display: none;
+        pointer-events: all;
+        transition: opacity 0.3s 0.3s, color 0.3s 0s;
+    }
+    
+    body.shrink .admin-profile {
+        width: 80%;
+        max-width: 100%;
+        transition: opacity 0.3s 0s, max-width 0.7s 0s ease-in-out;
+    }
+
+
+
+}
+
+@media screen and (max-width : 425px) {
+    .row-parking {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows : repeat(1, 1fr);
+        gap: 1rem;
+    }
+
+    .card-box-body {
+        overflow: scroll;
+    }
+
+    nav::before {
+        display: none;
+    }
+    
+}

@@ -3,6 +3,7 @@ const shrinkBtn = document.querySelector(".shrink-btn");
 const sidebarLinks = document.querySelectorAll(".sidebar-links a");
 const activeTab = document.querySelector(".active-tab");
 const tooltipElements = document.querySelectorAll(".tooltip-element");
+const mobileIconSidebar = document.querySelector('.icon-menu-sidebar')
 
 const logoutBtn = document.querySelector("#logout-btn");
 const logoutForm = document.querySelector("#logout-form");
@@ -38,6 +39,10 @@ shrinkBtn.addEventListener("click", () => {
         shrinkBtn.classList.remove("hovered");
     }, 500);
 });
+
+mobileIconSidebar.addEventListener('click',() => {
+    document.body.classList.toggle("shrink");
+})
 
 function moveActiveTab() {
     let topPosition = activeIndex * 58 + 2.5;

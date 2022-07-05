@@ -27,7 +27,7 @@ class HomeController extends Controller
         return view('pages.home');
     }
 
-    public function getChartData(Request $request) {
+    public function chartMontly(Request $request) {
         $months = (array) [
             "January" => 0,
             "February" => 0,
@@ -56,5 +56,35 @@ class HomeController extends Controller
             // 'label' => $labels,
             'data' => (array) $months
         ]);
+    }
+
+    public function chartWeekly(Request $request){
+
+        $weeks = (array) [
+            "Minggu 1" => 0,
+            "Minggu 2" => 0,
+            "Minggu 3" => 0,
+            "Minggu 4" => 0
+        ];
+
+
+        $weekData = Parking::select(
+            \DB::raw("WEEK(created_at) as week"),
+            \DB::raw("COUNT(clockin) as total"),
+        )
+        ->whereMonth('created_at', \Carbon\Carbon::now()->month)
+        ->groupBy('week')
+        ->orderBy('week', 'ASC')
+        ->get();
+
+        foreach($weekData as $index => $w){
+            $weeks["Minggu ".$index+1] = $w->total;
+        }
+
+        return response()->json([
+            // 'label' => $labels,
+            'data' => (array) $weeks
+        ]);
+    
     }
 }

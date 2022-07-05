@@ -7,6 +7,8 @@ use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\SlotController;
 
+use Rawilk\Printing\Receipts\ReceiptPrinter;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,4 +69,5 @@ Route::put("/rate/status/{id}", [RateController::class, 'changeStatus'])->name('
 //Slot
 Route::put("/slot/update/{id}", [SlotController::class, 'update'])->name('slot.update');
 
-Route::get("/chart", [HomeController::class, 'getChartData'])->name('chart.month');
+Route::get("/chart-monthly", [HomeController::class, 'chartMontly'])->name('chart.month');
+Route::get("/chart-weekly", [HomeController::class, 'chartWeekly'])->name('chart.week');
