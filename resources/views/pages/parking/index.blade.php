@@ -185,7 +185,7 @@
             </div>
         </div>
     </div>
-    <div class="container-camera">
+    {{-- <div class="container-camera">
         <div class="popup-camera">
             <div class="popup-camera-close">
                 <i class="bx bx-x"></i>
@@ -194,7 +194,7 @@
                     
             </div>
         </div>
-    </div>
+    </div> --}}
     
 @endsection
 
