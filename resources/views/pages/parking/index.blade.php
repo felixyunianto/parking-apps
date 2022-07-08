@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+<div class="container-camera" id="container-camera" style="display :none">
+    <div class="popup-camera">
+        <div class="popup-camera-close">
+            <i class="bx bx-x" id="closeCamera"></i>
+        </div>
+        <select id="pilihKamera" style="max-width:400px; display:none">
+        </select>
+        <div class="video-preview">
+            <video id="previewKamera" style=""></video>
+        </div>
+    </div>
+</div>
     <div class="container-parking">
         <div class="row-parking">
             <div class="col-parking">
@@ -81,13 +93,13 @@
                         </div>
                         <form action="{{ route('parking.checkout') }}" method="GET" style="display: none" id="form-scanner">
                             @csrf
-                            <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
+                            <div class="scanner-form" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
                                 <div class="input-group" style="flex:1">
                                     <div class="input-field">
                                         <input type="text" placeholder="Kode parkir" name="barcode" required>
                                     </div>
                                 </div>
-                                <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
+                                <button class="btn btn-main button-scanner-form" style="padding: 0.7rem 1rem">Cari</button>
                             </div>
                         </form>
                     </div>
@@ -185,20 +197,12 @@
             </div>
         </div>
     </div>
-    {{-- <div class="container-camera">
-        <div class="popup-camera">
-            <div class="popup-camera-close">
-                <i class="bx bx-x"></i>
-            </div>
-            <div class="video-preview">
-                    
-            </div>
-        </div>
-    </div> --}}
+    
     
 @endsection
 
 @section('script')
+
     <script>
         var buttonSubmitChangeSlot = document.querySelector('#change-slot');
         var inputChangeSlot = document.querySelector('#input-change-slot');
@@ -221,8 +225,13 @@
         let containerChooseAction = $('#container-choose-action')
         let btnChooseScanner =  $('#btn-choose-scanner')
         let btnChooseCamera = $('#btn-choose-camera')
+        let btnCloseContainerCamera = $('#closeCamera');
+
+        let containerCamera = $("#container-camera")
         
         let formScanner = $('#form-scanner')
+
+        const codeReader = new ZXing.BrowserMultiFormatReader();
         
 
         btnChooseScanner.click(function () {
@@ -230,8 +239,22 @@
             formScanner.show();
         })
 
+        btnChooseCamera.click(function() {
+            containerCamera.show();
+            document.querySelector('body').style.overflow = 'hidden'
+            initScanner();
+        })
 
-        const codeReader = new ZXing.BrowserMultiFormatReader();
+        btnCloseContainerCamera.click(function() {
+            containerCamera.hide();
+            document.querySelector('body').style.overflow = 'auto'
+            codeReader.reset();
+        })
+
+
+        
+        var selectedDeviceId = null;
+        const sourceSelect = $("#pilihKamera");
 
 
         function initScanner() {
@@ -252,7 +275,6 @@
                         }
                     }
                      
-                     
                     if (videoInputDevices.length >= 1) {
                         sourceSelect.html('');
                         videoInputDevices.forEach((element) => {
@@ -272,8 +294,12 @@
                         .then(result => {
  
                                 //hasil scan
-                                console.log(result.text)
-                                $("#hasilscan").val(result.text);
+                                console.log(result)
+                                // $("#hasilscan").val(result.text);
+                                alert(result.text)
+                                containerCamera.hide();
+                                document.querySelector('body').style.overflow = 'auto'
+
                              
                                 if(codeReader){
                                     codeReader.reset()
@@ -287,8 +313,6 @@
             })
             .catch(err => console.error(err.message));
         }
-
-        initScanner();
 
 
     </script>

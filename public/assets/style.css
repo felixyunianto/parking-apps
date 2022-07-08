@@ -855,17 +855,17 @@ input[type="number"] {
 }
 
 .container-camera {
-    position: absolute;
+    position: fixed;
     top :0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10;
+    z-index: 20;
     background : rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
+    
 }
 
 .popup-camera {
@@ -875,6 +875,29 @@ input[type="number"] {
     border-radius: 4px;
     display: flex;
     flex-direction: column;
+    /* z-index: 50; */
+}
+
+.video-preview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#previewKamera {
+    width: 400px;
+}
+
+.popup-camera-close {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding : 1rem;
+}
+
+.popup-camera-close i {
+    cursor: pointer;
 }
 
 
@@ -981,11 +1004,35 @@ input[type="number"] {
         transition: opacity 0.3s 0s, max-width 0.7s 0s ease-in-out;
     }
 
+    .popup-camera {
+        width: 60%;
+        height: 60%;
+        background-color: white;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        /* z-index: 50; */
+    }
+
+    #previewKamera {
+        width: 300px;
+    }
+
 
 
 }
 
 @media screen and (max-width : 425px) {
+    .scanner-form{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .button-scanner-form {
+        width: 90%;
+        margin: 0 2rem;
+    }
+
     .row-parking {
         width: 100%;
         display: grid;
@@ -1000,6 +1047,14 @@ input[type="number"] {
 
     nav::before {
         display: none;
+    }
+
+    .popup-camera{
+        width: 90%;
+    }
+
+    #previewKamera {
+        width: 200px;
     }
     
 }
