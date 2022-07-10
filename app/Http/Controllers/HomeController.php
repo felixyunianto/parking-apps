@@ -76,6 +76,8 @@ class HomeController extends Controller
         ->orderBy('week', 'ASC')
         ->get();
 
+        dd($weekData);
+
         foreach($weekData as $index => $w){
             $weeks["Minggu ".$index+1] = (int) $w->total;
         }
