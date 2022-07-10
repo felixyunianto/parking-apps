@@ -1,13 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-home">
-    <div class="card-home w-50 " style="padding : 20px">
-        <canvas id="chart-monthly" width="300" ></canvas>
-
+<div class="container-home" style="position :relative; left: 0">
+    <h3 class="title-home">Parkir Pandaan</h3>
+    <div class="container-chart">
+        <div class="card-chart">
+            <canvas id="chart-monthly" ></canvas>
+    
+        </div>
+        <div class="card-chart">
+            <canvas id="chart-weekly" ></canvas>
+        </div>
     </div>
-    <div class="card-home w-50">
-        <canvas id="chart-weekly" width="300" ></canvas>
+    <div class="container-information">
+        <div class="card-information">
+            <div class="information-tag">
+                <span class="information-title" style="color: #4d934d">Total Parkir</span>
+                <span class="information-desc">Total parkir yang disediakan</span>
+            </div>
+            <span class="information-value" style="color: #4d934d">{{$space}}</span>
+        </div>
+
+        <div class="card-information">
+            <div class="information-tag">
+                <span class="information-title" style="color: rgb(15, 101, 221)">Total Terpakai</span>
+                <span class="information-desc">Total parkir yang telah terpakai</span>
+            </div>
+            <span class="information-value" style="color: rgb(15, 101, 221)">{{$ongoing}}</span>
+        </div>
+
+        <div class="card-information">
+            <div class="information-tag">
+                <span class="information-title" style="color: rgb(255, 166, 0)">Total Tidak Terpakai</span>
+                <span class="information-desc">Total parkir yang tidak terpakai</span>
+            </div>
+            <span class="information-value" style="color: rgb(255, 166, 0)">{{$empty}}</span>
+        </div>
     </div>
 </div>
 @endsection

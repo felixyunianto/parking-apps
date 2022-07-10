@@ -363,7 +363,7 @@ main .content {
     color: #1f2027;
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 main .copyright span {
@@ -833,14 +833,70 @@ input[type="number"] {
 .container-home {
     width: 100%;
     display: flex;
+    flex-direction: column;
     gap: 1rem;
+
 }
 
-.card-home {
+.title-home {
+    font-size : 1.6rem;
+    line-height: 1;
+}
+
+.container-chart{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 10px;   
+}
+
+.card-chart {
     background-color: #fff;
     border-radius: 2px;
-    border : 1px solid #bab6b6
+    border : 1px solid #bab6b6;
+    width: 100%;
+    /* grid-column: 1/1; */
+    grid-row: auto;
 }
+
+.container-information {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 10px;
+}
+
+.card-information {
+    background-color: #fff;
+    border-radius: 2px;
+    border : 1px solid #bab6b6;
+    display: flex;
+    gap : 10;
+    padding : 1rem 2rem;
+    justify-content: space-between;
+}
+
+.container-information .card-information .information-tag{
+    display: flex;
+    flex-direction: column;
+}
+
+.container-information .card-information .information-title{
+    font-size : 18px;
+    font-weight: 500;
+}
+
+.container-information .card-information .information-desc{
+    font-size : 14px;
+    font-weight: 400;
+    color : #1f2027
+}
+
+.container-information .card-information .information-value{
+    font-size : 24px;
+    font-weight: 500;
+}
+
 
 .w-60{
     width: 60%;
@@ -1055,6 +1111,40 @@ input[type="number"] {
 
     #previewKamera {
         width: 200px;
+    }
+
+    .container-chart{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(1, 1fr);
+        width: 100%;
+        margin-left: -6px;  
+    }
+
+    .card-chart{
+        grid-column: auto;
+    }
+
+    .container-information {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .container-information .card-information .information-title{
+        font-size : 14px;
+        font-weight: 500;
+    }
+    
+    .container-information .card-information .information-desc{
+        font-size : 12px;
+        font-weight: 400;
+        color : #1f2027
+    }
+    
+    .container-information .card-information .information-value{
+        font-size : 20px;
+        font-weight: 500;
     }
     
 }
