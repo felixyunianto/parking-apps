@@ -69,16 +69,15 @@ class HomeController extends Controller
 
 
         $weekData = Parking::select(
-            \DB::raw("WEEK(created_at) as week"),
+            \DB::raw("WEEK(clockin) as week"),
             \DB::raw("COUNT(clockin) as total"),
         )
-        ->whereMonth('created_at', \Carbon\Carbon::now()->month)
         ->groupBy('week')
         ->orderBy('week', 'ASC')
         ->get();
 
         foreach($weekData as $index => $w){
-            $weeks["Minggu ".$index+1] = $w->total;
+            $weeks["Minggu ".$index+1] = (int) $w->total;
         }
 
         return response()->json([
