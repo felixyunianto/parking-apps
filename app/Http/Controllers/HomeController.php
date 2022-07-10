@@ -77,7 +77,7 @@ class HomeController extends Controller
         ->get();
 
         foreach($weekData as $index => $w){
-            $weeks["Minggu ".$index+1] =  intval($w->total);
+            $weeks["Minggu ".((int)$index + 1)] =  intval($w->total);
         }
 
         return response()->json([
