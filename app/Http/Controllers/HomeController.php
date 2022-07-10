@@ -51,12 +51,10 @@ class HomeController extends Controller
             "December" => 0,
 
         ];
-        $monthData = Parking::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(clockin) as month_name"),\DB::raw("LEFT(DATE_FORMAT('clockin', '%M'), 3) as month_short_name"))
-                ->whereYear('clockin', date('Y'))
-                ->groupBy(\DB::raw("Month(clockin)"))
-                ->get();
-
-                    dd($monthData);
+        $monthData = Parking::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(clockin) as month_name"))
+                    ->whereYear('clockin', date('Y'))
+                    ->groupBy(\DB::raw("Month(clockin)"))
+                    ->pluck('count', 'month_name');
 
         foreach($monthData as $index => $m){
             $months[$index] = $m;
