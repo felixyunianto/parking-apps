@@ -57,6 +57,7 @@
     </style>
     <div style="margin:0 auto;display:flex;align-items:center;flex-direction:column; width: 90%;">
         <h1 class="tc fs-16">IndePark</h1>
+        <img src="{{asset('img/logo-karcis.png')}}" alt="" style="width : 50mm">
         <div class="barcode">
             <img src="data:images/png;base64,{{ DNS1D::getBarcodePNG($parking->barcode, 'C128') }}" alt="Barcode"
                 height="40px" width="100%" style="margin:0 auto;" />
@@ -64,6 +65,15 @@
         </div>
         <table class="rTable" style="">
             <tbody>
+                <tr>
+                    <td class="w40">
+                        Nama Operator
+                    </td>
+                    <td class="w10">:</td>
+                    <td class="w50">
+                        {{ Auth::user()->name }}
+                    </td>
+                </tr>
                 <tr>
                     <td class="w40">
                         Plat Motor

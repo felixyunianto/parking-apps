@@ -14,6 +14,7 @@
                 <div class="" style="text-align:center;width: 100%">
                     <h1>IndePark</h1>
                 </div>
+                
                 <div class="barcode-container">
                     <img src="data:images/png;base64,{{ DNS1D::getBarcodePNG($parking->barcode, 'C128') }}" alt="Barcode"
                         height="50px" width="60%" />

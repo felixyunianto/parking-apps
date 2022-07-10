@@ -5,22 +5,22 @@
 @endsection
 
 @section('content')
-<div class="container-camera" id="container-camera" style="display :none">
-    <div class="popup-camera">
-        <div class="popup-camera-close">
-            <i class="bx bx-x" id="closeCamera"></i>
-        </div>
-        <select id="pilihKamera" style="max-width:400px; display:none">
-        </select>
-        <div class="video-preview">
-            <video id="previewKamera" style=""></video>
+    <div class="container-camera" id="container-camera" style="display :none">
+        <div class="popup-camera">
+            <div class="popup-camera-close">
+                <i class="bx bx-x" id="closeCamera"></i>
+            </div>
+            <select id="pilihKamera" style="max-width:400px; display:none">
+            </select>
+            <div class="video-preview">
+                <video id="previewKamera" style=""></video>
+            </div>
         </div>
     </div>
-</div>
     <div class="container-parking">
         <div class="row-parking">
             <div class="col-parking">
-                <div class="card-box">
+                <div class="card-box" style="height: 175px">
                     <div class="card-box-header" style="background-color : #e9e9e9;">
                         Total Parkir
                     </div>
@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-parking">
-                <div class="card-box">
+                <div class="card-box" style="height: 175px">
                     <div class="card-box-header" style="background-color : #e9e9e9;">
                         Total Booking
                     </div>
@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="col-parking">
-                <div class="card-box">
+                <div class="card-box" style="height: 175px">
                     <div class="card-box-header" style="background-color : #e9e9e9;">
                         Total Parkir tersedia
                     </div>
@@ -87,21 +87,22 @@
                         Parkir Keluar
                     </div>
                     <div class="card-box-body">
-                        <div class="" style="width : 100%; display: flex; align-items :center; gap: 0.5rem" id="container-choose-action">
-                            <div class="btn btn-main" style="width: 50%; padding: 0.8rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-scanner">Dengan scanner</div>
-                            <div class="btn btn-main" style="width: 50%; padding: 0.8rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-camera">Dengan kamera</div>
-                        </div>
                         <form action="{{ route('parking.checkout') }}" method="GET" style="display: none" id="form-scanner">
                             @csrf
                             <div class="scanner-form" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
                                 <div class="input-group" style="flex:1">
                                     <div class="input-field">
-                                        <input type="text" placeholder="Kode parkir" name="barcode" required>
+                                        <input type="text" placeholder="Kode parkir" name="barcode" required id="barcode-field">
                                     </div>
                                 </div>
                                 <button class="btn btn-main button-scanner-form" style="padding: 0.7rem 1rem">Cari</button>
                             </div>
                         </form>
+                        <div class="" style="width : 100%; display: flex; flex-direction:column; align-items :center; gap: 0.5rem">
+                            <div class="btn btn-main" style="width: 100%; padding: 0.5rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-scanner">Dengan scanner</div>
+                            <div class="btn btn-main" style="width: 100%; padding: 0.5rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-camera">Dengan kamera</div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -221,11 +222,10 @@
             inputChangeSlot.style.display = 'block';
             this.style.display = 'none';
         })
-
-        let containerChooseAction = $('#container-choose-action')
         let btnChooseScanner =  $('#btn-choose-scanner')
         let btnChooseCamera = $('#btn-choose-camera')
         let btnCloseContainerCamera = $('#closeCamera');
+        let barcodeField = $('#barcode-field');
 
         let containerCamera = $("#container-camera")
         
@@ -235,12 +235,15 @@
         
 
         btnChooseScanner.click(function () {
-            containerChooseAction.hide()
             formScanner.show();
+            codeReader.reset();
+            $(this).hide();
         })
 
         btnChooseCamera.click(function() {
             containerCamera.show();
+            formScanner.hide();
+            btnChooseScanner.show();
             document.querySelector('body').style.overflow = 'hidden'
             initScanner();
         })
@@ -296,13 +299,16 @@
                                 //hasil scan
                                 console.log(result)
                                 // $("#hasilscan").val(result.text);
-                                alert(result.text)
+                                barcodeField.val(result.text);
                                 containerCamera.hide();
                                 document.querySelector('body').style.overflow = 'auto'
 
                              
                                 if(codeReader){
                                     codeReader.reset()
+                                    setTimeout(() => {
+                                        formScanner.submit();
+                                    }, 500);
                                 }
                         })
                         .catch(err => console.error(err));

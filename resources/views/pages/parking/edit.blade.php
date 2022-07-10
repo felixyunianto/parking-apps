@@ -5,10 +5,22 @@
 @endsection
 
 @section('content')
+    <div class="container-camera" id="container-camera" style="display :none">
+        <div class="popup-camera">
+            <div class="popup-camera-close">
+                <i class="bx bx-x" id="closeCamera"></i>
+            </div>
+            <select id="pilihKamera" style="max-width:400px; display:none">
+            </select>
+            <div class="video-preview">
+                <video id="previewKamera" style=""></video>
+            </div>
+        </div>
+    </div>
     <div class="container-parking">
         <div class="row-parking">
             <div class="col-parking">
-                <div class="card-box">
+                <div class="card-box" style="height: 175px">
                     <div class="card-box-header" style="background-color : #e9e9e9;">
                         Total Parkir
                     </div>
@@ -42,7 +54,7 @@
                 </div>
             </div>
             <div class="col-parking">
-                <div class="card-box">
+                <div class="card-box" style="height: 175px">
                     <div class="card-box-header" style="background-color : #e9e9e9;">
                         Total Booking
                     </div>
@@ -56,7 +68,7 @@
                 </div>
             </div>
             <div class="col-parking">
-                <div class="card-box">
+                <div class="card-box" style="height: 175px">
                     <div class="card-box-header" style="background-color : #e9e9e9;">
                         Total Parkir tersedia
                     </div>
@@ -75,18 +87,22 @@
                         Parkir Keluar
                     </div>
                     <div class="card-box-body">
-                        <form action="{{ route('parking.checkout') }}" method="GET">
+                        <form action="{{ route('parking.checkout') }}" method="GET" style="display: none" id="form-scanner">
                             @csrf
-                            <div class="" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
+                            <div class="scanner-form" style="display:flex;align-items:center;gap:10px;padding:0.2rem 0">
                                 <div class="input-group" style="flex:1">
                                     <div class="input-field">
-                                        <input type="text" placeholder="Kode parkir" name="barcode" required>
+                                        <input type="text" placeholder="Kode parkir" name="barcode" required id="barcode-field">
                                     </div>
                                 </div>
-                                <button class="btn btn-main" style="padding: 0.7rem 1rem">Cari</button>
+                                <button class="btn btn-main button-scanner-form" style="padding: 0.7rem 1rem">Cari</button>
                             </div>
                         </form>
-
+                        <div class="" style="width : 100%; display: flex; flex-direction:column; align-items :center; gap: 0.5rem">
+                            <div class="btn btn-main" style="width: 100%; padding: 0.5rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-scanner">Dengan scanner</div>
+                            <div class="btn btn-main" style="width: 100%; padding: 0.5rem 0;text-align:center;font-size: 14px; border-radius: 8px" id="btn-choose-camera">Dengan kamera</div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -158,4 +174,135 @@
     </div>
 @endsection
 @section('script')
+
+    <script>
+        var buttonSubmitChangeSlot = document.querySelector('#change-slot');
+        var inputChangeSlot = document.querySelector('#input-change-slot');
+        var buttonChangeSlot = document.querySelector('#first-change-slot');
+
+        $('#first-change-slot').on('click', function(e) {
+            e.preventDefault();
+
+            buttonSubmitChangeSlot.style.display = 'block';
+            inputChangeSlot.style.display = 'block';
+            this.style.display = 'none';
+        })
+        let btnChooseScanner =  $('#btn-choose-scanner')
+        let btnChooseCamera = $('#btn-choose-camera')
+        let btnCloseContainerCamera = $('#closeCamera');
+        let barcodeField = $('#barcode-field');
+
+        let containerCamera = $("#container-camera")
+        
+        let formScanner = $('#form-scanner')
+
+        const codeReader = new ZXing.BrowserMultiFormatReader();
+        
+
+        btnChooseScanner.click(function () {
+            formScanner.show();
+            codeReader.reset();
+            $(this).hide();
+        })
+
+        btnChooseCamera.click(function() {
+            containerCamera.show();
+            formScanner.hide();
+            btnChooseScanner.show();
+            document.querySelector('body').style.overflow = 'hidden'
+            initScanner();
+        })
+
+        btnCloseContainerCamera.click(function() {
+            containerCamera.hide();
+            document.querySelector('body').style.overflow = 'auto'
+            codeReader.reset();
+        })
+
+
+        
+        var selectedDeviceId = null;
+        const sourceSelect = $("#pilihKamera");
+
+
+        function initScanner() {
+            codeReader
+            .listVideoInputDevices()
+            .then(videoInputDevices => {
+                videoInputDevices.forEach(device =>
+                    console.log(`${device.label}, ${device.deviceId}`)
+                );
+ 
+                if(videoInputDevices.length > 0){
+                     
+                    if(selectedDeviceId == null){
+                        if(videoInputDevices.length > 1){
+                            selectedDeviceId = videoInputDevices[1].deviceId
+                        } else {
+                            selectedDeviceId = videoInputDevices[0].deviceId
+                        }
+                    }
+                     
+                    if (videoInputDevices.length >= 1) {
+                        sourceSelect.html('');
+                        videoInputDevices.forEach((element) => {
+                            const sourceOption = document.createElement('option')
+                            sourceOption.text = element.label
+                            sourceOption.value = element.deviceId
+                            if(element.deviceId == selectedDeviceId){
+                                sourceOption.selected = 'selected';
+                            }
+                            sourceSelect.append(sourceOption)
+                        })
+                 
+                    }
+ 
+                    codeReader
+                        .decodeOnceFromVideoDevice(selectedDeviceId, 'previewKamera')
+                        .then(result => {
+ 
+                                //hasil scan
+                                console.log(result)
+                                // $("#hasilscan").val(result.text);
+                                barcodeField.val(result.text);
+                                containerCamera.hide();
+                                document.querySelector('body').style.overflow = 'auto'
+
+                             
+                                if(codeReader){
+                                    codeReader.reset()
+                                    setTimeout(() => {
+                                        formScanner.submit();
+                                    }, 500);
+                                }
+                        })
+                        .catch(err => console.error(err));
+                     
+                } else {
+                    alert("Camera not found!")
+                }
+            })
+            .catch(err => console.error(err.message));
+        }
+
+
+    </script>
+    @error('capasity')
+        <script>
+            buttonSubmitChangeSlot.style.display = 'block';
+            inputChangeSlot.style.display = 'block';
+            buttonChangeSlot.style.display = 'none';
+        </script>
+    @else
+        <script>
+            $('#first-change-slot').on('click', function(e) {
+                e.preventDefault();
+
+                buttonSubmitChangeSlot.style.display = 'block';
+                inputChangeSlot.style.display = 'block';
+                this.style.display = 'none';
+            })
+        </script>
+    @enderror
 @endsection
+
