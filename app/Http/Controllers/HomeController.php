@@ -37,24 +37,26 @@ class HomeController extends Controller
 
     public function chartMontly(Request $request) {
         $months = (array) [
-            "Jan" => 0,
-            "Feb" => 0,
-            "Maret" => 0,
-            "Apr" => 0,
-            "Mei" => 0,
-            "Juni" => 0,
-            "Juli" => 0,
-            "Aug" => 0,
-            "Sep" => 0,
-            "Okt" => 0,
-            "Nov" => 0,
-            "Des" => 0,
+            "January" => 0,
+            "February" => 0,
+            "March" => 0,
+            "April" => 0,
+            "May" => 0,
+            "June" => 0,
+            "July" => 0,
+            "August" => 0,
+            "September" => 0,
+            "October" => 0,
+            "November" => 0,
+            "December" => 0,
 
         ];
-        $monthData = Parking::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(created_at) as month_name"))
-                    ->whereYear('created_at', date('Y'))
-                    ->groupBy(\DB::raw("Month(created_at)"))
-                    ->pluck('count', 'month_name');
+        $monthData = Parking::select(\DB::raw("COUNT(*) as count"), \DB::raw("MONTHNAME(clockin) as month_name"),\DB::raw("LEFT(DATE_FORMAT('clockin', '%M'), 3) as month_short_name"))
+                ->whereYear('clockin', date('Y'))
+                ->groupBy(\DB::raw("Month(clockin)"))
+                ->get();
+
+                    dd($monthData);
 
         foreach($monthData as $index => $m){
             $months[$index] = $m;
