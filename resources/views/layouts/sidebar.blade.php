@@ -45,6 +45,7 @@
                 </a>
             </li> --}}
 
+            @role('admin')
             <li class="tooltip-element" data-tooltip="2">
                 <a href="#" class="@if (Request::is('report')) active @endif" data-active="2"
                     data-link="{{ route('report') }}">
@@ -66,6 +67,7 @@
                     <span class="link hide">User</span>
                 </a>
             </li>
+            @endrole
 
             <div class="tooltip">
                 <span class="show">Dashboard</span>
