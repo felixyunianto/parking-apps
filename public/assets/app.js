@@ -14,13 +14,17 @@ switch (window.location.pathname.split("/")[1]) {
     case "parking":
         activeIndex = 1;
         break;
-    case "rate":
+    case "report":
         activeIndex = 2;
         break;
 
     case "user":
         activeIndex = 3;
         break;
+
+    case "report":
+            activeIndex = 3;
+            break;
 
     default:
         activeIndex = 0;
@@ -64,7 +68,7 @@ function changeLink() {
         case "parking":
             activeIndex = 1;
             break;
-        case "rate":
+        case "report":
             activeIndex = 2;
             break;
 

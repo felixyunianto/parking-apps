@@ -957,6 +957,41 @@ input[type="number"] {
 }
 
 
+/* Report  */
+.container-report {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+}
+
+.title-report {
+    font-size : 1.6rem;
+    line-height: 1;
+}
+
+.report-choose-date{
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    width: 60%;
+    padding-bottom: 20px;
+}
+
+
+.container-report-print{
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+    width: 20%;
+    padding-bottom: 20px;
+}
+
+
+
+
 @media screen and (max-width : 768px){
     body {
         display: flex;
@@ -1074,8 +1109,6 @@ input[type="number"] {
         width: 300px;
     }
 
-
-
 }
 
 @media screen and (max-width : 425px) {
@@ -1145,6 +1178,32 @@ input[type="number"] {
     .container-information .card-information .information-value{
         font-size : 20px;
         font-weight: 500;
+    }
+
+
+    /* Report */
+    .report-choose-date{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        flex-direction: column;
+        padding-bottom: 40px;
+    }
+
+    .report-choose-date .input-group , .report-choose-date button.btn{
+        min-width: 100%;
+    }
+
+    .container-report-print{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+        padding-bottom: 20px;
+        flex-direction: column;
+    }
+
+    .container-report-print .input-group , .container-report-print button.btn{
+        min-width: 100%;
     }
     
 }

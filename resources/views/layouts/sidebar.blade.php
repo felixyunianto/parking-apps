@@ -46,7 +46,8 @@
             </li> --}}
 
             <li class="tooltip-element" data-tooltip="2">
-                <a href="#" data-active="2">
+                <a href="#" class="@if (Request::is('report')) active @endif" data-active="2"
+                    data-link="{{ route('report') }}">
                     <div class="icon-sidebar">
                         <i class="bx bx-file"></i>
                         <i class="bx bxs-file"></i>

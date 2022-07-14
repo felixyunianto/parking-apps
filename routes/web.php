@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ParkingController;
 use App\Http\Controllers\RateController;
 use App\Http\Controllers\SlotController;
+use App\Http\Controllers\ReportController;
 
 use Rawilk\Printing\Receipts\ReceiptPrinter;
 
@@ -71,3 +72,11 @@ Route::put("/slot/update/{id}", [SlotController::class, 'update'])->name('slot.u
 
 Route::get("/chart-monthly", [HomeController::class, 'chartMontly'])->name('chart.month');
 Route::get("/chart-weekly", [HomeController::class, 'chartWeekly'])->name('chart.week');
+
+
+// Report
+Route::get('/report', [ReportController::class, "index"])->name('report');
+
+// Report Print
+Route::get('/report/pdf', [ReportController::class, 'printPDF'])->name('report.pdf');
+Route::get('/report/excel', [ReportController::class, 'printExcel'])->name('report.excel');
