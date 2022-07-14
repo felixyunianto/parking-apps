@@ -76,7 +76,7 @@
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ date('d M Y H:i:s', strtotime($report->clockin)) }}</td>
-                            <td>{{ date('d M Y H:i:s', strtotime($report->clockout)) }}</td>
+                            <td>{{ $report->clockout ? date('d M Y H:i:s', strtotime($report->clockout)) : '-' }}</td>
                             <td>{{ $report->motorcycle_plate }}</td>
                             <td>{{ $report->driver_name }}</td>
                             <td>{{ $report->phone_number }}</td>
