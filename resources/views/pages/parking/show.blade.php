@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container-parking">
-        <div class="card-box" style="width: 50%">
+        <div class="card-box card-box-detail" style="">
             <div class="card-box-header">
                 <div class="card-box-title">Detail</div>
             </div>
