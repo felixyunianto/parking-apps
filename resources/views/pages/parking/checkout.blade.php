@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="container-parking">
-        <div class="card-box" style="width: 50%">
+        <div class="card-box card-box-checkout" style="">
             <div class="card-box-header">
                 <div class="card-box-title">Detail</div>
             </div>
@@ -26,7 +26,7 @@
                                 <td class="detail-left">
                                     Plat Motor
                                 </td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right">
                                     {{ $parking->motorcycle_plate }}
                                 </td>
                             </tr>
@@ -34,23 +34,23 @@
                                 <td class="detail-left">
                                     Nama
                                 </td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">{{ $parking->driver_name }}</td>
+                                <td class="detail-right">{{ $parking->driver_name }}</td>
                             </tr>
 
                             <tr>
                                 <td class="detail-left">
                                     Nomor Handphone
                                 </td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">{{ $parking->phone_number }}</td>
+                                <td class="detail-right">{{ $parking->phone_number }}</td>
                             </tr>
                             <tr>
                                 <td class="detail-left">Tanggal Masuk</td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right">
                                     {{ date('Y-m-d H:i:s', strtotime($parking->clockin)) }}</td>
                             </tr>
                             <tr>
                                 <td class="detail-left">Tanggal Keluar</td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right">
                                     {{ date('Y-m-d H:i:s', strtotime($current)) }}
                                     <input type="hidden" name="clockout"
                                         value="{{ date('Y-m-d H:i:s', strtotime($current)) }}">
@@ -58,7 +58,7 @@
                             </tr>
                             <tr>
                                 <td class="detail-left">Durasi</td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right">
                                     {{ $duration->d !== 0 ? $duration->d . ' Hari ' : '' }}
                                     {{ $duration->h !== 0 ? $duration->h . ' Jam ' : '' }}
                                     {{ $duration->i !== 0 ? $duration->i . ' Menit ' : '' }}
@@ -69,17 +69,17 @@
                             </tr>
                             <tr>
                                 <td class="detail-left">Total</td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right">
                                     Rp. {{ number_format($price, 0, '', '.') }}
                                     <input type="hidden" name="amount" value="{{ $price }}">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="detail-left">Bayar</td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right" style="padding: 0.6rem">
                                     <div class="input-group">
                                         <div class="input-field @error('payment') error @enderror">
-                                            <input type="text" placeholder="Jumlah Uang" name="payment"
+                                            <input style="width: 70%" type="text" placeholder="Jumlah Uang" name="payment"
                                                 value="{{ old('payment') }}" data-type="currency" id="payment">
                                             <div class="error-mark @error('payment') error-mark-show @enderror">
                                                 <i class="bx bx-x"></i>
@@ -90,10 +90,10 @@
                             </tr>
                             <tr>
                                 <td class="detail-left">Kembalian</td>
-                                <td class="detail-right" style="padding: 1.1rem 2rem">
+                                <td class="detail-right" style="padding: 0.6rem">
                                     <div class="input-group">
                                         <div class="input-field @error('change') error @enderror">
-                                            <input type="text" placeholder="Jumlah kembalian" name="change"
+                                            <input style="width: 70%" type="text" placeholder="Jumlah kembalian" name="change"
                                                 id="change" value="{{ old('change') }}" data-type="currency"
                                                 readonly="true">
                                             <div class="error-mark @error('change') error-mark-show @enderror">
