@@ -57,7 +57,7 @@
     </style>
     <div style="margin:0 auto;display:flex;align-items:center;flex-direction:column; width: 90%;">
         <h1 class="tc fs-16">IndePark</h1>
-        <img src="{{asset('img/logo-karcis.png')}}" alt="" style="width : 50mm; margin-bottom : 10px">
+        <img src="{{asset('img/logo-print.png')}}" alt="" style="width : 50mm; margin-bottom : 10px">
         <div class="barcode">
             <img src="data:images/png;base64,{{ DNS1D::getBarcodePNG($parking->barcode, 'C128') }}" alt="Barcode"
                 height="40px" width="100%" style="margin:0 auto;" />
