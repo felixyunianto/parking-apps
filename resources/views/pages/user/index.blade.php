@@ -54,9 +54,9 @@
                                     <button style="display: none" type="submit"
                                         id="form-delete-user-{{ $user->id }}"></button>
                                 </form>
-                                <button class="btn btn-primary"
+                                {{-- <button class="btn btn-primary"
                                     onclick="showAlertConfirmation('form-status-user-{{ $user->id }}', 'Peringatan', 'Apakah anda yakin ingin mengubah status user ini?')">Ubah
-                                    Status</button>
+                                    Status</button> --}}
 
                                 <button class="btn btn-edit"
                                     onclick="return window.location.href='{{ route('user.edit', $user->id) }}'">Edit</button>

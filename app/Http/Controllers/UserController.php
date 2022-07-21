@@ -42,12 +42,15 @@ class UserController extends Controller
         $this->validate($request,$rules, $messages);
 
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'is_admin' => $request->is_admin === 'is_admin' ? 1 : 0,
+            'status' => 1
         ]);
+
+        $user->assignRole($request->is_admin === 'is_admin' ? "admin" : "user");
 
 
         return redirect()->route('user')->with('success', "User berhasil ditambahkan");
@@ -90,7 +93,12 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $password,
             'is_admin' => $request->is_admin === 'is_admin' ? 1 : 0,
+            'status' => 1
         ]);
+
+        $model_has_role = \DB::table('model_has_roles')->where('model_id', $id)->delete();
+
+        $user->assignRole($request->is_admin === 'is_admin' ? "admin" : "user");
 
 
         return redirect()->route('user')->with('success', "User berhasil diubah");

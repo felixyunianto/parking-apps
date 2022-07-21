@@ -97,17 +97,24 @@ class ParkingController extends Controller
                 // dd($duration);
         
                 $price = 0;
-        
-                if($duration_minute <= 720){
+
+                if($duration_minute <= 360){
                     $price = 3000;
+                }else if($duration_minute > 360 && $duration_minute <= 720){
+                    $price = 5000;
+                }else if($duration_minute > 720 && $duration_minute <= 1440){
+                    $price = 10000;
                 }else{
-                    if($duration_minute <= 1440 && $duration_minute >= 720){
-                        $price = 5000;
-                    }else{
-                        $clockin = strtotime($parking->clockin);
-                        $diff = strtotime($current) - $clockin;
-                        $price = ceil($diff / (60 * 60 * 24)) * (int) "5000";
-                    }
+                    $clockin = strtotime($parking->clockin);
+                    $diff = strtotime($current) - $clockin;
+                    $price = ceil($diff / (60 * 60 * 24)) * (int) "10000";
+                    // if($duration_minute <= 1440 && $duration_minute > 720){
+                    //     $price = 5000;
+                    // }else{
+                    //     $clockin = strtotime($parking->clockin);
+                    //     $diff = strtotime($current) - $clockin;
+                    //     $price = ceil($diff / (60 * 60 * 24)) * (int) "5000";
+                    // }
                 }
         
                 return view('pages.parking.checkout', compact('parking', 'price', 'current', 'duration'));
