@@ -163,6 +163,21 @@
                             @enderror
                         </div>
 
+                        <div class="input-group" style="width: 40%">
+                            <label for="">Keterangan</label>
+                            <div class="input-field @error('description') error @enderror">
+                                <textarea name="description" id="description" cols="30" rows="10" placeholder="Isikan keterangan dari penitipan">{{$parking->description}}</textarea>
+                                <div class="error-mark @error('description') error-mark-show @enderror">
+                                    <i class="bx bx-x"></i>
+                                </div>
+                            </div>
+                            @error('description')
+                                <div class="error-message">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+
                         <div class="">
                             <button type="submit" class="btn btn-main" style="padding : 0.8rem 2rem">Simpan</button>
                         </div>

@@ -44,6 +44,12 @@
                                 <td class="detail-right">{{ $parking->phone_number }}</td>
                             </tr>
                             <tr>
+                                <td class="detail-left">
+                                    Keterangan
+                                </td>
+                                <td class="detail-right">{{ $parking->description }}</td>
+                            </tr>
+                            <tr>
                                 <td class="detail-left">Tanggal Masuk</td>
                                 <td class="detail-right">
                                     {{ date('Y-m-d H:i:s', strtotime($parking->clockin)) }}</td>

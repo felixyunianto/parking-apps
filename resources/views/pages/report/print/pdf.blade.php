@@ -42,6 +42,7 @@
                 <th>Plat</th>
                 <th>Nama</th>
                 <th>Handphone</th>
+                <th>Keterangan</th>
                 <th>Total</th>
             </tr>
         </thead>
@@ -57,6 +58,7 @@
                     <td style="padding-left: 10px">{{ $report->motorcycle_plate }}</td>
                     <td style="padding-left: 10px">{{ $report->driver_name }}</td>
                     <td style="padding-left: 10px">{{ $report->phone_number }}</td>
+                    <td style="padding-left: 10px">{{ $report->description }}</td>
                     <td style="padding-left: 10px; text-align:right">{{number_format($report->amount, 0, "", ".")}}</td>
                 </tr>
                 

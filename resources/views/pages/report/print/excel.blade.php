@@ -10,6 +10,7 @@
             <th style="text-align: center; width: 30px; border: 1px solid black">Plat</th>
             <th style="text-align: center; width: 30px; border: 1px solid black">Nama</th>
             <th style="text-align: center; width: 30px; border: 1px solid black">Handphone</th>
+            <th style="text-align: center; width: 100px; border: 1px solid black">Keterangan</th>
             <th style="text-align: center; width: 30px; border: 1px solid black">Total</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td style="text-align: left; border: 1px solid black">{{ $report->motorcycle_plate }}</td>
             <td style="text-align: left; border: 1px solid black">{{ $report->driver_name }}</td>
             <td style="text-align: left; border: 1px solid black">{{ $report->phone_number }}</td>
+            <td style="text-align: left; border: 1px solid black">{{ $report->description }}</td>
             <td style="text-align: left; border: 1px solid black">Rp. {{number_format($report->amount)}}</td>
         </tr>
         @endforeach

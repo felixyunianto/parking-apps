@@ -457,7 +457,17 @@ main .copyright span {
 .input-group .input-field input {
     flex: 1;
     outline: none;
+    font-family: "Poppins", sans-serif;
     border: none;
+    padding: 0.2rem;
+    font-size: 0.9rem;
+}
+
+.input-group .input-field textarea {
+    flex: 1;
+    outline: none;
+    border: none;
+    font-family: "Poppins", sans-serif;
     padding: 0.2rem;
     font-size: 0.9rem;
 }

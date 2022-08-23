@@ -120,6 +120,7 @@
                             <th>No</th>
                             <th>Barcode</th>
                             <th>Plat Nomor</th>
+                            <th>Keterangan</th>
                             <th>Masuk</th>
                             <th>Keluar</th>
                             <th>Bayar</th>
@@ -136,6 +137,7 @@
                                 <td>{{ $no++ }}</td>
                                 <td>{{ $parking->barcode }}</td>
                                 <td>{{ $parking->motorcycle_plate }}</td>
+                                <td>{{$parking->description ? $parking->description : "-"}}</td>
                                 <td>{{ date('d M Y h:i:s', strtotime($parking->clockin)) }}</td>
                                 <td>{{ $parking->clockout ? date('d M Y h:i:s', strtotime($parking->clockout)) : '-' }}
                                 </td>

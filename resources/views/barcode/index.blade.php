@@ -98,6 +98,13 @@
                     <td class="w50">{{ $parking->phone_number }}</td>
                 </tr>
                 <tr>
+                    <td class="w40" style="vertical-align: top;">
+                        Keterangan
+                    </td>
+                    <td class="w10" style="vertical-align: top;">:</td>
+                    <td class="w50">{{ $parking->description }}</td>
+                </tr>
+                <tr>
                     <td class="w40">Tanggal Masuk</td>
                     <td class="w10">:</td>
                     <td class="w50">{{ date('Y-m-d H:i:s', strtotime($parking->clockin)) }}</td>

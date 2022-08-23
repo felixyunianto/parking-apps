@@ -15,7 +15,7 @@ class ParkingController extends Controller
     }
 
     public function index(){
-        $parkings = Parking::orderBy('barcode')->get();
+        $parkings = Parking::orderBy('clockin', 'DESC')->get();
 
         $space = Slot::findOrFail(1)->capasity;
         
@@ -59,7 +59,8 @@ class ParkingController extends Controller
             'motorcycle_plate' => $request->motorcycle_plate,
             'driver_name' => $request->driver_name,
             'phone_number' => $request->phone_number,
-            'clockin' => $clockin
+            'clockin' => $clockin,
+            'description' => $request->description
         ]);
 
         return redirect()->route('parking.show', $parking->id)->with('success', 'Data parkir berhasil ditambahkan');
@@ -195,6 +196,7 @@ class ParkingController extends Controller
             'motorcycle_plate' => $request->motorcycle_plate,
             'driver_name' => $request->driver_name,
             'phone_number' => $request->phone_number,
+            'description' => $request->description
         ]);
 
         return redirect()->route('parking')->with('success', 'Data parkir berhasil diubah');

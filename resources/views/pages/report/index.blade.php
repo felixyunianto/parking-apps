@@ -41,14 +41,14 @@
                     </button>
                 @endif
                 @if (Request::get('start_date') && Request::get('end_date') )
-                    <button type="button" class="btn" style="color:white; padding : 0.8rem 2rem; background:rgb(27, 173, 27); flex: 1"
+                    <button type="button" class="btn" style="color:white; padding : 0.8rem 1.5rem; background:rgb(27, 173, 27); flex: 1"
                         onclick="window.open('{{route('report.excel',['start_date' => Request::get('start_date'),'end_date' => Request::get('end_date')])}}', '_blank')"
                     >
                         <i class='bx bx-spreadsheet'></i> 
                         <span>Excel</span>
                     </button>    
                 @else
-                    <button type="button" class="btn" style="color:white; padding : 0.8rem 2rem; background:rgb(27, 173, 27); flex: 1"
+                    <button type="button" class="btn" style="color:white; padding : 0.8rem 1.5rem; background:rgb(27, 173, 27); flex: 1;"
                         onclick="window.open('{{route('report.excel',)}}', '_blank')"
                     >
                         <i class='bx bx-spreadsheet'></i> 
@@ -66,6 +66,7 @@
                         <th>Plat Nomor</th>
                         <th>Nama</th>
                         <th>No. Handphone</th>
+                        <th>Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,6 +81,7 @@
                             <td>{{ $report->motorcycle_plate }}</td>
                             <td>{{ $report->driver_name }}</td>
                             <td>{{ $report->phone_number }}</td>
+                            <td>{{ $report->description }}</td>
                         </tr>
                         
                     @endforeach

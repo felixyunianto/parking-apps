@@ -25,6 +25,7 @@ class CreateParkingsTable extends Migration
             $table->string('duration')->nullable();
             $table->string('payment')->nullable();
             $table->string('change')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
